@@ -14,22 +14,22 @@
             <hr>
             <h3>Bądź pierwszą osobą, która oceni.</h3>
       {% else %}
-            <span class="text-info">Overall Rating: </span><span class="badge badge-primary badge-pill">{{ book_rating }}</span>
+            <span class="text-info">Ocena ogólna: </span><span class="badge badge-primary badge-pill">{{ book_rating }}</span>
             <br>
             <hr>
-            <h3>Review Comments</h3>
+            <h3>Recenzje</h3>
             <ul>
             {% for review in reviews %}
                   <li class="list-group-item">
-                        <span class="text-info">Review comment: </span> <span>{{ review.content }}</span>
+                        <span class="text-info">Recenzja: </span> <span>{{ review.content }}</span>
                         <br>
-                        <span class="text-info">Created on: </span><span>{{ review.date_created }}</span>
+                        <span class="text-info">Data utworzenia: </span><span>{{ review.date_created }}</span>
                         <br>
-                        <span class="text-info">Modified on: </span><span>{{ review.date_edited }}</span>
+                        <span class="text-info">Data modyfikacji: </span><span>{{ review.date_edited }}</span>
                         <br>
-                        <span class="text-info">Rating: </span><span class="badge badge-secondary badge-pill">{{ review.rating }}</span>
+                        <span class="text-info">Ocena: </span><span class="badge badge-secondary badge-pill">{{ review.rating }}</span>
                         <br>
-                        <span class="text-info">Creator: </span><span>{{ review.creator.username }}</span>
+                        <span class="text-info">Autor recenzji: </span><span>{{ review.creator.username }}</span>
                         <br>
                   </li>
             {% endfor %}

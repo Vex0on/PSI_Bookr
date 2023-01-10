@@ -4,11 +4,6 @@ from .models import Book, Review
 from .utils import average_rating
 
 
-# def welcome_view(request):
-#     message = f"<html><h1>Witaj w witrynie Bookr!</h1> <p>{Book.objects.count()} książek i stale dodajemy nowe!</p></html>"
-#     return HttpResponse(message)
-
-
 def welcome_view(request):
     return render(request, "base.html")
 

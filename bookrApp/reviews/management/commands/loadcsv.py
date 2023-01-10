@@ -3,7 +3,7 @@ import re
 
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandError
-from bookrApp.reviews.models import Publisher, Contributor, Book, BookContributor, Review
+from ...models import Publisher, Contributor, Book, BookContributor, Review
 
 
 class Command(BaseCommand):
