@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Book, Review
+from .models import Book, Contributor, Review
 from .utils import average_rating
+from .forms import SearchForm
 
 
 def welcome_view(request):
@@ -8,8 +9,30 @@ def welcome_view(request):
 
 
 def book_search(request):
-    search_text = request.GET.get("search", "")
-    return render(request, "search-results.html", {"search_text": search_text})
+    search_text = request.GET.get("szukaj", "")
+    form = SearchForm(request.GET)
+    books = set()
+    if form.is_valid() and form.cleaned_data["szukaj"]:
+        szukaj = form.cleaned_data["szukaj"]
+        szukaj_w = form.cleaned_data.get("search_in") or "tytuł"
+        if szukaj_w == "tytuł":
+            books = Book.objects.filter(title__icontains=szukaj)
+        if szukaj_w == "tytuł":
+            books = Book.objects.filter(title__icontains=szukaj)
+        else:
+            fname_contributors = Contributor.objects.filter(first_names__icontains=szukaj)
+
+            for współtwórca in fname_contributors:
+                for book in współtwórca.book_set.all():
+                    books.add(book)
+
+            lname_contributors = Contributor.objects.filter(last_names__icontains=szukaj)
+
+            for współtwórca in lname_contributors:
+                for book in współtwórca.book_set.all():
+                    books.add(book)
+
+    return render(request, "search-results.html", {"form": form, "search_text": search_text, "books": books})
 
 
 def book_list(request):
