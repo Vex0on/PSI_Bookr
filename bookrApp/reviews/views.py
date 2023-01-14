@@ -19,13 +19,9 @@ def book_search(request):
         if szukaj_w == "tytuł":
             books = Book.objects.filter(title__icontains=szukaj)
         elif szukaj_w == "współtwórca":
-            fname_contributors = Contributor.objects.filter(first_names__icontains=szukaj)
-            lname_contributors = Contributor.objects.filter(last_names__icontains=szukaj)
-            contributors = fname_contributors | lname_contributors
-            for contributor in contributors:
-                for book in contributor.book_set.all():
-                    books.add(book)
-    return render(request, "search-results.html", {"form": form, "search_text": search_text, "books": books})
+            books = Book.objects.filter(
+                Q(contributors__first_names__icontains=szukaj) | Q(contributors__last_names__icontains=szukaj)).distinct()
+        return render(request, "search-results.html", {"form": form, "search_text": search_text, "books": books})
 
 
 def book_list(request):
